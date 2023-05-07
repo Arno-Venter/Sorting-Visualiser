@@ -1,6 +1,6 @@
 import Bar from "./bar.js";
 
-const SIZE = 100;
+const SIZE = 60;
 const DELAY = 1;
 
 //window.onload = setup;
