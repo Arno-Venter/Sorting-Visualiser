@@ -5,6 +5,7 @@ const SIZE = 100;
 window.onload = setup;
 
 let container = document.getElementById("barContainer");
+let bars = [];
 
 function setup() {
   let data = [];
@@ -12,5 +13,6 @@ function setup() {
     data[i] = Math.random();
     const bar = new Bar(data[i]);
     bar.buildBar(container);
+    bars.push(bar);
   }
 }
