@@ -1,7 +1,7 @@
 import Bar from "./bar.js";
 
-const SIZE = 1000;
-const DELAY = 0.01;
+const SIZE = 100;
+const DELAY = 1;
 
 //window.onload = setup;
 
@@ -37,24 +37,35 @@ function buildBars() {
   }
 }
 
-async function bubbleSort() {
+function* bubbleSortGen() {
   for (let i = 0; i < data.length; i++)
     for (let j = 0; j < data.length - 1; j++) {
       if (data[j] > data[j + 1]) {
         let temp = data[j];
         data[j] = data[j + 1];
         data[j + 1] = temp;
-
-        await sleep(DELAY).then(() => {
-          buildBars();
-        });
+        yield j;
       }
     }
+}
+
+function bubbleSort() {
+  const gen = bubbleSortGen();
+  tick();
+
+  function tick() {
+    const result = gen.next();
+    if (!result.done) {
+      const el = container.children[result.value];
+      const next = el.nextElementSibling;
+      el.parentElement.insertBefore(next, el);
+      window.requestAnimationFrame(tick);
+    }
+  }
 }
 
 setup();
 
 startBtn.addEventListener("click", () => {
-  console.log("OKAY");
   bubbleSort();
 });
