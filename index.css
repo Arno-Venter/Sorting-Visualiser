@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana,
+    sans-serif;
+  color: white;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(47, 48, 90);
+  overflow: hidden;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: center;
+}
+
+.sort-method {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana,
+    sans-serif;
+  font-size: 1.5rem;
+  color: white;
+
+  width: 25%;
+  max-width: 350px;
+
+  background-color: rgb(110, 112, 214);
+
+  padding: 0.6rem;
+  margin: 0.5rem;
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+.sort-btn {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana,
+    sans-serif;
+  font-size: 1.5rem;
+  color: white;
+
+  background-color: rgb(110, 112, 214);
+
+  padding: 0.6rem;
+  margin: 0.5rem;
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+button:hover {
+  background-color: green;
+  cursor: pointer;
+}
+
+.sort-method:hover {
+  background-color: green;
+  cursor: pointer;
+}
+
+.sort-method:focus-visible {
+  outline: none;
+}
+
+#barContainer {
+  margin: auto;
+  margin-top: 1rem;
+
+  width: 90%;
+  height: 80%;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bar {
+  background-color: rgb(110, 112, 214);
+}
