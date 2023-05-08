@@ -64,24 +64,74 @@ function bubbleSort() {
   }
 }
 
-function mergeSort(arr) {
-  if (arr.length <= 1) return;
+function merge(arr, l1, r1, l2, r2) {
+  let temp = [];
+  let index = 0;
+  while (l1 <= r1 && l2 <= r2) {
+    if (arr[l1] <= arr[l2]) {
+      temp[index] = arr[l1];
+      index++;
+      l1++;
+    } else {
+      temp[index] = arr[l2];
+      index++;
+      l2++;
+    }
+  }
 
-  let mid = Math.floor(arr.length / 2);
-  let left = arr.slice(0, mid);
-  let right = arr.slice(mid);
+  while (l1 <= r1) {
+    temp[index] = arr[l1];
+    index++;
+    l1++;
+  }
 
-  return mergeSort(merge(left, right));
+  while (l2 <= r2) {
+    temp[index] = arr[l2];
+    index++;
+    l2++;
+  }
+
+  return temp;
 }
 
-function merge(left, right) {
-  let mergedArr = [];
+function* mergeSortGen(n) {
+  let len = 1;
+  while (len < n) {
+    let i = 0;
+    while (i < n) {
+      let l1 = i;
+      let r1 = i + len - 1;
+      let l2 = i + len;
+      let r2 = i + 2 * len - 1;
+      if (l2 >= n) {
+        break;
+      }
+      if (r2 >= n) {
+        r2 = n - 1;
+      }
+      let temp = merge(data, l1, r1, l2, r2);
+      for (let j = 0; j < r2 - l1 + 1; j++) {
+        data[i + j] = temp[j];
+        yield {
+          dataIndex: i + j,
+          jIndex: j,
+        };
+      }
+      i = i + 2 * len;
+    }
+    len = len * 2;
+  }
+}
 
-  while (left.length && right.length) {
-    if (left[0] <= right[0]) {
-      mergedArr.push(left[0]);
-    } else {
-      mergedArr.push(right[0]);
+function mergeSort() {
+  const gen = mergeSortGen(SIZE);
+  tick();
+
+  function tick() {
+    const result = gen.next();
+    if (!gen.done) {
+      buildBars();
+      window.requestAnimationFrame(tick);
     }
   }
 }
@@ -89,6 +139,5 @@ function merge(left, right) {
 setup();
 
 startBtn.addEventListener("click", () => {
-  bubbleSort();
-  console.log(mergeSort([, 5, 8, 4, 7, 1, 2]));
+  mergeSort();
 });
