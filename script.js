@@ -1,7 +1,6 @@
 import Bar from "./bar.js";
 
 const SIZE = 60;
-const DELAY = 1;
 
 //window.onload = setup;
 
@@ -18,10 +17,10 @@ async function sleep(millis) {
 
 function setup() {
   for (let i = 0; i < SIZE; i++) data[i] = Math.random();
-  buildBars();
+  buildBars(0);
 }
 
-function buildBars() {
+function buildBars(current) {
   if (bars.length !== 0) {
     for (let i = 0; i < SIZE; i++) {
       bars[i].barDiv.remove();
@@ -35,6 +34,9 @@ function buildBars() {
     bar.buildBar(container);
     bars.push(bar);
   }
+
+  const currentBar = container.children[current];
+  currentBar.style.backgroundColor = "green";
 }
 
 function* bubbleSortGen() {
@@ -112,10 +114,7 @@ function* mergeSortGen(n) {
       let temp = merge(data, l1, r1, l2, r2);
       for (let j = 0; j < r2 - l1 + 1; j++) {
         data[i + j] = temp[j];
-        yield {
-          dataIndex: i + j,
-          jIndex: j,
-        };
+        yield i + j;
       }
       i = i + 2 * len;
     }
@@ -129,8 +128,9 @@ function mergeSort() {
 
   function tick() {
     const result = gen.next();
-    if (!gen.done) {
-      buildBars();
+    if (!result.done) {
+      buildBars(result.value);
+
       window.requestAnimationFrame(tick);
     }
   }
@@ -139,5 +139,14 @@ function mergeSort() {
 setup();
 
 startBtn.addEventListener("click", () => {
-  mergeSort();
+  let select = document.getElementById("sortMethod");
+  let sort = select.value;
+  switch (sort) {
+    case "bubble":
+      bubbleSort();
+      break;
+    case "merge":
+      mergeSort();
+      break;
+  }
 });

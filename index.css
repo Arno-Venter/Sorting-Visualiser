@@ -63,7 +63,11 @@ button:hover {
   cursor: pointer;
 }
 
-.sort-method:focus-visible {
+.sort-option {
+  background-color: rgb(110, 112, 214);
+}
+
+.sort-method {
   outline: none;
 }
 
@@ -77,8 +81,4 @@ button:hover {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-}
-
-.bar {
-  background-color: rgb(110, 112, 214);
 }
