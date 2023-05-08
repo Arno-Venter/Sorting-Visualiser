@@ -64,8 +64,31 @@ function bubbleSort() {
   }
 }
 
+function mergeSort(arr) {
+  if (arr.length <= 1) return;
+
+  let mid = Math.floor(arr.length / 2);
+  let left = arr.slice(0, mid);
+  let right = arr.slice(mid);
+
+  return mergeSort(merge(left, right));
+}
+
+function merge(left, right) {
+  let mergedArr = [];
+
+  while (left.length && right.length) {
+    if (left[0] <= right[0]) {
+      mergedArr.push(left[0]);
+    } else {
+      mergedArr.push(right[0]);
+    }
+  }
+}
+
 setup();
 
 startBtn.addEventListener("click", () => {
   bubbleSort();
+  console.log(mergeSort([, 5, 8, 4, 7, 1, 2]));
 });
