@@ -10,6 +10,7 @@ let bars = [];
 let data = [];
 
 function setup() {
+  data = [];
   for (let i = 0; i < SIZE; i++) data[i] = Math.random();
 
   buildBars(0);
@@ -173,6 +174,7 @@ let slider = document.getElementById("rangeSlider");
 slider.addEventListener("input", () => {
   SIZE = slider.value;
   setup();
+  console.log(data);
 });
 
 let select = document.getElementById("sortMethod");
