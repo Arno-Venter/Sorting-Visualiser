@@ -135,6 +135,38 @@ function mergeSort() {
   }
 }
 
+function* insertionSortGen() {
+  for (let i = 1; i < data.length; i++) {
+    let temp = data[i];
+    let p = 1;
+    while (data[i - p] > temp) {
+      data[i - p + 1] = data[i - p]; //move term up
+      yield i - p;
+      p++;
+    }
+
+    data[i - p + 1] = temp;
+  }
+  console.log(data);
+}
+
+function insertionSort() {
+  const gen = insertionSortGen();
+  tick();
+
+  function tick() {
+    const result = gen.next();
+    if (!result.done) {
+      buildBars(result.value);
+      window.requestAnimationFrame(tick);
+    } else {
+      for (let i = 0; i < SIZE; i++) {
+        bars[i].barDiv.style.backgroundColor = "green";
+      }
+    }
+  }
+}
+
 setup();
 
 let slider = document.getElementById("rangeSlider");
@@ -157,6 +189,9 @@ startBtn.addEventListener("click", () => {
       break;
     case "merge":
       mergeSort();
+      break;
+    case "insertion":
+      insertionSort();
       break;
   }
 });
