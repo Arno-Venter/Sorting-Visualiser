@@ -10,13 +10,12 @@ let bars = [];
 let data = [];
 
 function setup() {
-  data = [];
   for (let i = 0; i < SIZE; i++) data[i] = Math.random();
+
   buildBars(0);
 }
 
 function buildBars(current) {
-  console.log(bars.length);
   container.replaceChildren();
 
   bars = [];
@@ -139,7 +138,7 @@ function mergeSort() {
 setup();
 
 let slider = document.getElementById("rangeSlider");
-slider.addEventListener("change", () => {
+slider.addEventListener("input", () => {
   SIZE = slider.value;
   setup();
 });
