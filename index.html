@@ -25,6 +25,16 @@
       <button id="sortBtn" class="sort-btn">
         Visualise
       </button>
+      <input
+        type="range"
+        min="1"
+        max="200"
+        value="50"
+        class="range"
+        id="rangeSlider"
+        oninput="rangeValue.innerText = this.value"
+      />
+      <p id="rangeValue">50</p>
     </div>
     <div id="barContainer"></div>
     <script src="./script.js" type="module"></script>

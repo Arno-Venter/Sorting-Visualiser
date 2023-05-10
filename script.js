@@ -1,6 +1,6 @@
 import Bar from "./bar.js";
 
-const SIZE = 60;
+let SIZE = 50;
 
 //window.onload = setup;
 
@@ -9,23 +9,15 @@ let startBtn = document.getElementById("sortBtn");
 let bars = [];
 let data = [];
 
-async function sleep(millis) {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(), millis);
-  });
-}
-
 function setup() {
+  data = [];
   for (let i = 0; i < SIZE; i++) data[i] = Math.random();
   buildBars(0);
 }
 
 function buildBars(current) {
-  if (bars.length !== 0) {
-    for (let i = 0; i < SIZE; i++) {
-      bars[i].barDiv.remove();
-    }
-  }
+  console.log(bars.length);
+  container.replaceChildren();
 
   bars = [];
 
@@ -59,9 +51,14 @@ function bubbleSort() {
     const result = gen.next();
     if (!result.done) {
       const el = container.children[result.value];
-      const next = el.nextElementSibling;
-      el.parentElement.insertBefore(next, el);
+      buildBars(result.value);
+      //const next = el.nextElementSibling;
+      //el.parentElement.insertBefore(next, el);
       window.requestAnimationFrame(tick);
+    } else {
+      for (let i = 0; i < SIZE; i++) {
+        bars[i].barDiv.style.backgroundColor = "green";
+      }
     }
   }
 }
@@ -132,14 +129,28 @@ function mergeSort() {
       buildBars(result.value);
 
       window.requestAnimationFrame(tick);
-    }
+    } else
+      for (let i = 0; i < SIZE; i++) {
+        bars[i].barDiv.style.backgroundColor = "green";
+      }
   }
 }
 
 setup();
 
+let slider = document.getElementById("rangeSlider");
+slider.addEventListener("change", () => {
+  SIZE = slider.value;
+  setup();
+});
+
+let select = document.getElementById("sortMethod");
+
+select.addEventListener("change", () => {
+  setup();
+});
+
 startBtn.addEventListener("click", () => {
-  let select = document.getElementById("sortMethod");
   let sort = select.value;
   switch (sort) {
     case "bubble":
